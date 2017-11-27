@@ -12,7 +12,6 @@ void setup(){
   
   for(int i = 0; i < grid.length; i++){
     grid[i] = new Cell(i % gridSize, (i / gridSize)%gridSize);
-    println("y: " + ((i / gridSize)%gridSize) + " x: " + (i % gridSize));
   }
   
   stack = new ArrayList<Cell>();
