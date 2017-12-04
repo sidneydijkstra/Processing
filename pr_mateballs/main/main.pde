@@ -21,7 +21,7 @@ void draw(){
       for(int i = 0; i < blobs.length; i++){
         sum += 200 * blobs[i].r / dist(x, y, blobs[i].pos.x, blobs[i].pos.y);
       }
-      pixels[index] = color(sum); // normal = sum, 255, 255
+      pixels[index] = color(sum % 200, 255, 255); // normal = sum, 255, 255
     }
   }
   

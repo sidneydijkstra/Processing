@@ -19,8 +19,8 @@ class Branch{
   }
   
   void jitter(){
-    this.end.x += random(-1,1);
-    this.end.y += random(-1,1);
+    this.end.x += random(-7,7);
+    this.end.y += random(-7,7);
   }
   
   Branch branchLeft(){

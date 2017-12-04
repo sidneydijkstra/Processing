@@ -2,6 +2,7 @@ class SolarSystem{
   PVector solPosition;
   color solColor;
   
+  Planet sun;
   Planet p;
   
   SolarSystem(int x, int y, color c){
@@ -10,10 +11,18 @@ class SolarSystem{
     solColor = c;
     
     // set planet
-    p = new Planet();
+    sun = new Planet(null,null);
+    sun.mass = 100;
+    p = new Planet(sun, new PVector((width/2) - 80, height/2));
+  }
+  
+  void update(){
+    sun.update();
+    p.update();
   }
   
   void show(){
+    sun.show();
     p.show();
   }
   

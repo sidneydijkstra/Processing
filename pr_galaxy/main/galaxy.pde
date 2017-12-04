@@ -22,6 +22,7 @@ class Galaxy{
     if(loadedSol != null){ // on display solarsystem
       
       loadedSol.show();
+      loadedSol.update();
       
     }else{ // on display full galaxy
       loadPixels();
@@ -37,6 +38,8 @@ class Galaxy{
           text("you hover galaxy you good", 10, 30);
           
           loadedSol = gal;
+        }else if(mouseX == gal.getX() && mouseY == gal.getY()){
+          print("hover");
         }
       }
       

@@ -13,6 +13,8 @@ class Cell{
   int j;
   int i;
  
+   color col;
+ 
  // wall bools
   Boolean wTop;
   Boolean wRight;
@@ -21,6 +23,10 @@ class Cell{
   
   // visited variable
   Boolean visited;
+  
+  Cell parent;
+  Boolean end;
+  Boolean start;
   
   // constructor function
   Cell(int _cell, int _row){
@@ -39,6 +45,15 @@ class Cell{
     wLeft = true;
     
     visited = false;
+    
+    // set parent for solving maze
+    parent = null;
+    end = false;
+    start = false;
+    
+    // set color
+    int sum = (x+y) * 2;
+    col = color(100,sum,sum);
   }
   
   // update function
@@ -52,7 +67,7 @@ class Cell{
     pushStyle();
     noStroke();
     if(visited){
-      fill(255);
+      fill(col);
     }else{
       fill(150);
     }
@@ -86,6 +101,14 @@ class Cell{
     popStyle();
   }
   
+  void path(){
+    pushStyle();
+    noStroke();
+    fill(220,0,0, 150);
+    rect(i, j, w, h);
+    popStyle();
+  }
+  
   void openWalls(Cell _cell){
     if(this.y - _cell.y == 1){ // top
       this.wTop = false;
@@ -105,5 +128,4 @@ class Cell{
       _cell.wRight = false;
     }
   }
-  
 }
