@@ -2,12 +2,12 @@ Map map;
 AiManager AiManager;
 
 Entity[] entitys;
-int entityAmount = 3; 
+int entityAmount = 200; 
 
 void setup(){
   size(600,600);
   
-  map = new Map(20,20);
+  map = new Map(100,100);
   AiManager = new AiManager();
   
   entitys = new Entity[entityAmount];

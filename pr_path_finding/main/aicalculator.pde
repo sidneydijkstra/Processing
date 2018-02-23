@@ -7,17 +7,30 @@ class AiCalculator{
   }
   
   public Queue<Tile> getPath(Tile start, Tile end, Map map){ // <-- get a path from a set pos to a set pos
-    ArrayList path = this.calculateSetPath(start, end, map);
-    return this.flipArrayListToQueue(path);
+    return this.calculateSetPath(start, end, map);
   }
   
   public Queue<Tile> getPath(Tile start, Map map){ // <-- get a path from a set pos to a random pos
     Tile end = map.getRandomWalkableTile();
-    ArrayList path = this.calculateSetPath(start, end, map);
-    return this.flipArrayListToQueue(path);
+    return this.calculateSetPath(start, end, map);
   }
   
-  private ArrayList<Tile> calculateSetPath(Tile start, Tile end, Map map){
+  public Queue<Tile> getPath(Tile start, float range, Map map){
+    ArrayList<Tile> list = map.getAllWalkableTiles();
+    ArrayList<Tile> inRangeList = new ArrayList<Tile>();
+    
+    for(int i = 0; i < list.size(); i++){
+      Tile t = list.get(i);
+      if(PVector.dist(start.getPosition(), t.getPosition()) <= range){
+        inRangeList.add(t);
+      }
+    }
+    
+    int rand = floor(random(0, inRangeList.size()-1));
+    return this.calculateSetPath(start, inRangeList.get(rand), map);
+  }
+  
+  private Queue<Tile> calculateSetPath(Tile start, Tile end, Map map){
     //print("yeah im starting to calculate\n");
     
     ArrayList<Tile> open = new ArrayList<Tile>();
@@ -39,8 +52,6 @@ class AiCalculator{
       if(current == null){
         continue; // <-- this should never be the case
       }
-      
-      //current.DEBUGCOLOR = color(0,0,255);
       
       // remove current from open and add it to closed
       open.remove(current);
@@ -82,17 +93,7 @@ class AiCalculator{
       current = current.parent;
     }
     
-    path.add(current);
-    
-    for(Tile t : path){
-      t.DEBUGCOLOR = color(0,255,0);
-    }
-    
-    return path;
-    
-    //reverse(path);
-    
-    
+    return this.flipArrayListToQueue(path);
   }
   
   private ArrayList<Tile> getNeighbours(Tile t, Map map){ // <-- remove all the if statements and use two for loops
@@ -106,17 +107,15 @@ class AiCalculator{
     int gridMaxX = map.getMapSizeX();
     int gridMaxY = map.getMapSizeY();
     
-    //print("x:" + x + " y:" + y + " index:" + vectorToIndex(x, y, gridMaxX) +"\n");
-    
-    if (x - 1 > -1) neighbours.add(grid[vectorToIndex(x - 1, y, gridMaxX)]);
-    if (y - 1 > -1) neighbours.add(grid[vectorToIndex(x, y - 1, gridMaxX)]);
-    if (x + 1 < gridMaxX) neighbours.add(grid[vectorToIndex(x + 1, y, gridMaxX)]);
-    if (y + 1 < gridMaxY) neighbours.add(grid[vectorToIndex(x, y + 1, gridMaxX)]);
-
-    if (x - 1 > -1 && y - 1 > -1) neighbours.add(grid[vectorToIndex(x - 1, y - 1, gridMaxX)]);
-    if (x - 1 > -1 && y + 1 < gridMaxY) neighbours.add(grid[vectorToIndex(x - 1, y + 1, gridMaxX)]);
-    if (x + 1 < gridMaxX && y + 1 < gridMaxY) neighbours.add(grid[vectorToIndex(x + 1, y + 1, gridMaxX)]);
-    if (x + 1 < gridMaxX && y - 1 > -1) neighbours.add(grid[vectorToIndex(x + 1, y - 1, gridMaxX)]);
+    for(int loopY = y-1; loopY <= y+1; loopY++){
+      for(int loopX = x-1; loopX <= x+1; loopX++){
+        if(loopY < 0 || loopY >= gridMaxY || loopX < 0 || loopX >= gridMaxX){
+          continue;
+        }
+        Tile n = grid[vectorToIndex(loopX, loopY, gridMaxX)];
+        neighbours.add(n);
+      }
+    }
     
     return neighbours;
   }

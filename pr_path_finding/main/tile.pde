@@ -51,6 +51,10 @@ class Tile {
     rect(_x, _y, _width, _height);
   }
 
+  public PVector getPosition(){
+    return position;
+  }
+
   public int gridX() {
     return _gridX;
   }

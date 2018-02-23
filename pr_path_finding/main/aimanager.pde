@@ -2,8 +2,10 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 class AiManager{
-  private AiCalculator AIC;
-  private ArrayList<Entity> aiListeners;
+  AiCalculator AIC;
+  ArrayList<Entity> aiListeners;
+  
+  int range = 200;
   
   private AiManager(){
     aiListeners = new ArrayList<Entity>();
@@ -14,19 +16,24 @@ class AiManager{
     for(int i = 0; i < aiListeners.size(); i++){
       Entity e = aiListeners.get(i);
       
+      Tile t = null;
       switch(e.state){
         case None:
           break;
         case Init:
-          Tile t = map.getRandomWalkableTile();
-          e.position = t.position;
-          e.setPath(AIC.getPath(t, map));
+          t = map.getRandomWalkableTile();
+          //e._currentTile = t;
+          //e.position = t.getPosition();
+          e.setPath(AIC.getPath(t, range, map));
           e.state = EntityState.Walking;
           break;
         case Error:
+          t = map.getRandomWalkableTile();
+          e.setPath(AIC.getPath(t, range, map));
+          e.state = EntityState.Walking;
           break;
         case WaitingForPath:
-          e.setPath(AIC.getPath(e.getCurrentTile(), map));
+          e.setPath(AIC.getPath(e.getCurrentTile(), range, map));
           e.state = EntityState.Walking;
           break;
         case Walking:
