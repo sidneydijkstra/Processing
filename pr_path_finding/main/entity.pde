@@ -16,6 +16,8 @@ class Entity{
   PVector velocity;
   PVector acceleration;
   
+  Tile home;
+  
   public Entity(int _id){
     this._id = _id;
     
@@ -87,5 +89,18 @@ class Entity{
   
   public Tile getCurrentTile(){
     return _currentTile;
+  }
+  
+  public void setHome(Tile t){
+    if(t.containsHome){
+      print("Can't set home of entity: " + _id);
+      return;
+    }
+    t.containsHome = true;
+    home = t;
+  }
+  
+  public Boolean isHome(){
+    return home == _currentTile;
   }
 }

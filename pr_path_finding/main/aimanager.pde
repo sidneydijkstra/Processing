@@ -5,7 +5,7 @@ class AiManager{
   AiCalculator AIC;
   ArrayList<Entity> aiListeners;
   
-  int range = 200;
+  int range = 400;
   
   private AiManager(){
     aiListeners = new ArrayList<Entity>();
@@ -22,10 +22,11 @@ class AiManager{
           break;
         case Init:
           t = map.getRandomWalkableTile();
-          //e._currentTile = t;
-          //e.position = t.getPosition();
+          
           e.setPath(AIC.getPath(t, range, map));
           e.state = EntityState.Walking;
+          
+          e.setHome(t);
           break;
         case Error:
           t = map.getRandomWalkableTile();
@@ -33,7 +34,12 @@ class AiManager{
           e.state = EntityState.Walking;
           break;
         case WaitingForPath:
-          e.setPath(AIC.getPath(e.getCurrentTile(), range, map));
+          if(e.isHome()){
+            e.setPath(AIC.getPath(e.getCurrentTile(), range, map));
+          }else{
+            e.setPath(AIC.getPath(e.getCurrentTile(), e.home, map));
+          }
+        
           e.state = EntityState.Walking;
           break;
         case Walking:

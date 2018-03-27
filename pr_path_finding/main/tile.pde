@@ -9,7 +9,10 @@ class Tile {
 
   int _width;
   int _height;
-
+  
+  Boolean containsFood;
+  Boolean containsHome;
+  
   Boolean isWalkable = true; // is this tile walkable
   Tile parent = null; // the parent of this tile
   
@@ -33,6 +36,9 @@ class Tile {
     this._width = _width;
     this._height = _height;
     
+    this.containsFood = false;
+    this.containsHome = false;
+    
     DEBUGCOLOR = color(255);
   }
   
@@ -49,6 +55,14 @@ class Tile {
     
     stroke(0);
     rect(_x, _y, _width, _height);
+    
+    if(containsFood){
+      fill(0,120,120);
+      ellipse(_x + _width/2, _y + _height/2, _width/2, _height/2);
+    }else if(containsHome){
+      fill(255,222,173);
+      rect(_x + _width/4, _y + _height/4, _width/2, _height/2);
+    }
   }
 
   public PVector getPosition(){

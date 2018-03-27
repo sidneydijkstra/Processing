@@ -39,10 +39,13 @@ class Map{
         
         _tiles[index] = new Tile(x, y, posX, posY, _tileWidth, _tileHeight);
         
-        if(random(100) <= 10 ){//&& _mapWidth*_mapHeight > index){
+        if(random(100) <= 10){//&& _mapWidth*_mapHeight > index){
           _tiles[index].isWalkable = false;
           _unwalkableTiles.add(_tiles[index]);
         }else{
+          if(random(100) <= 10){
+            //_tiles[index].containsHome = true;
+          }
           _walkableTiles.add(_tiles[index]);
         }
       }
