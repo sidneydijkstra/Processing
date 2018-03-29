@@ -16,6 +16,9 @@ class Entity{
   PVector velocity;
   PVector acceleration;
   
+  float foodSearchRange;
+  Boolean hasFood;
+  int foodAmount;
   Tile home;
   
   public Entity(int _id){
@@ -27,6 +30,10 @@ class Entity{
     position = new PVector();
     velocity = new PVector();
     acceleration = new PVector();
+    
+    foodSearchRange = 200.0f;
+    hasFood = false;
+    foodAmount = 0;
   }
   
   public void update(){

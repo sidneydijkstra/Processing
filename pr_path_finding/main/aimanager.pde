@@ -27,6 +27,7 @@ class AiManager{
           e.state = EntityState.Walking;
           
           e.setHome(t);
+          
           break;
         case Error:
           t = map.getRandomWalkableTile();
@@ -35,9 +36,26 @@ class AiManager{
           break;
         case WaitingForPath:
           if(e.isHome()){
+            if(e.hasFood){
+              e.foodAmount++;
+              e.hasFood = false;
+            }
             e.setPath(AIC.getPath(e.getCurrentTile(), range, map));
           }else{
-            e.setPath(AIC.getPath(e.getCurrentTile(), e.home, map));
+            if(e.hasFood){
+              e.setPath(AIC.getPath(e.getCurrentTile(), e.home, map));
+            }else if(e.getCurrentTile().containsFood){
+              e.getCurrentTile().containsFood = false;
+              e.hasFood = true;
+              e.setPath(AIC.getPath(e.getCurrentTile(), e.home, map));
+            }else{
+              Tile foodTile = map.searchFood(e.getCurrentTile(), e.foodSearchRange);
+              if(foodTile != null){
+                e.setPath(AIC.getPath(e.getCurrentTile(), foodTile, map));
+              }else{
+                e.setPath(AIC.getPath(e.getCurrentTile(), range, map));
+              }
+            }
           }
         
           e.state = EntityState.Walking;
