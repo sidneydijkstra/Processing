@@ -46,7 +46,34 @@ class Table{
     t.setNumber(num);
   }
   
-  public void moveLeft(){
+  public void move(int dir){
+    switch(dir){
+      case 0: // left
+        this.moveLeft();
+        break;
+      case 1: // up
+        this.rotateLeft();
+        this.moveLeft();
+        this.rotateRight();
+        break;
+      case 2: // right
+        this.rotateLeft();
+        this.rotateLeft();
+        this.moveLeft();
+        this.rotateRight();
+        this.rotateRight();
+        break;
+      case 3: // down
+        this.rotateRight();
+        this.moveLeft();
+        this.rotateLeft();
+        break;
+    }
+    
+    addNumber();
+  }
+  
+  private void moveLeft(){
     for(int i = 0; i < _size; i++){
       ArrayList<Tile> temp = new ArrayList<Tile>();
       for(int j = 0; j < _size; j++){
@@ -67,7 +94,46 @@ class Table{
       
     }
     
-    addNumber();
+    moveCheck();
+  }
+  
+  private void rotateLeft(){
+    Tile[][] tempgrid = new Tile[_size][_size];
+    for(int i = 0; i < _size; i++){
+      for(int j = 0; j < _size; j++){
+        tempgrid[(_size-1) - j][i] = grid[i][j];
+      }
+    }
+    grid = tempgrid;
+  }
+  
+  private void rotateRight(){
+    Tile[][] tempgrid = new Tile[_size][_size];
+    for(int i = 0; i < _size; i++){
+      for(int j = 0; j < _size; j++){
+        tempgrid[j][(_size-1) - i] = grid[i][j];
+      }
+    }
+    grid = tempgrid;
+  }
+  
+  private void moveCheck(){
+    for(int i = 0; i < _size; i++){
+      Tile currentTile = null;
+      for(int j = 0; j < _size; j++){
+        Tile t = grid[i][j];
+        if(!t.isZero()){
+          if(currentTile != null && currentTile.canCombine(t)){
+            currentTile.combine(t);
+            t.destroy();
+            
+            currentTile = null;
+          }else{
+            currentTile = t;
+          }
+        }
+      }
+    }
   }
   
   public void update(){
@@ -91,7 +157,6 @@ class Table{
           String num = str(grid[i][j].getNumber());
           text(num, j * _w + _w/2, (i * _w - _w/4) + _w);
         }
-        
       }
     }
   }

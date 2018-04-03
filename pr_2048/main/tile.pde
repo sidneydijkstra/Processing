@@ -10,6 +10,21 @@ class Tile{
     this.number = num;
   }
   
+  public Boolean canCombine(Tile t){
+    if(this.number == t.number){
+      return true;
+    }
+    return false;
+  }
+  
+  public void combine(Tile t){
+    this.setNumber(this.number + t.number);
+  }
+  
+  public void destroy(){
+    this.number = 0;
+  }
+  
   public int getNumber(){
     return this.number;
   }
