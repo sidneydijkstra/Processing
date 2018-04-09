@@ -69,12 +69,14 @@ void keyPressed() {
     lx += 200;
     ly += 200;
     
+    xOffset -= 100;
+    yOffset += 100;
   }  if (key == 'x') { // go in
     lx -= 200;
     ly -= 200;
     
-    xOffset += 100;
-    yOffset -= 100;
+    xOffset += 0;
+    yOffset -= 0;
   }  if (key == 'w' || key == 's') {
     yOffset += key == 'w' ? -30:30;
   }  if (key == 'a' || key == 'd') {
