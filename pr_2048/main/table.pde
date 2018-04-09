@@ -4,6 +4,7 @@ class Table{
   int _w;
   
   Tile[][] grid;
+  Tile newTile;
   
   public Table(int _size, int _w){
     this._size = _size;
@@ -44,6 +45,8 @@ class Table{
     Tile t = list.get(rand);
     int num = random(1) > 0.5f ? 2 : 4;
     t.setNumber(num);
+    
+    newTile = t;
   }
   
   public void move(int dir){
@@ -151,7 +154,14 @@ class Table{
         
         // text
         if(!grid[i][j].isZero()){
-          fill(0);
+          
+          if(newTile == grid[i][j]){
+            fill(100);
+          }else{
+            fill(0);
+          }
+          
+          
           textSize(64);
           textAlign(CENTER);
           String num = str(grid[i][j].getNumber());
