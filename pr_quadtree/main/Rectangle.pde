@@ -9,10 +9,18 @@ class Rectangle{
   }
   
   public Boolean contains(PVector point){
-    return (point.x >= this.center.x - this.size &&
-            point.x <= this.center.x + this.size &&
-            point.y >= this.center.y - this.size &&
-            point.y <= this.center.y + this.size);
+    return (point.x >= this.center.x - this.size/2 &&
+            point.x <= this.center.x + this.size/2 &&
+            point.y >= this.center.y - this.size/2 &&
+            point.y <= this.center.y + this.size/2);
+  }
+  
+  public Boolean contains(Rectangle other){
+    PVector point = other.center;
+    return (point.x >= this.center.x - this.size/2 &&
+            point.x <= this.center.x + this.size/2 &&
+            point.y >= this.center.y - this.size/2 &&
+            point.y <= this.center.y + this.size/2);
   }
   
   public Boolean intersects(Rectangle other){

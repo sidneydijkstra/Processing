@@ -25,11 +25,11 @@ class QuadTree{
   }
   
   public void show(){
-    if(!divided){ //<>//
+    if(!divided){
       //noFill();
       stroke(255);
       strokeWeight(2);
-      
+      noFill();
       rectMode(CENTER);
       
       rect(boundary.center.x, boundary.center.y, boundary.size, boundary.size);
@@ -41,6 +41,41 @@ class QuadTree{
     }
   }
   
+  public ArrayList<Rectangle> query(Rectangle range){
+    
+    // if not in range return empty list
+    if(!boundary.intersects(range)){
+      return new ArrayList<Rectangle>();
+    }
+    
+    // create arraylist of rectangle's
+    ArrayList<Rectangle> list = new ArrayList<Rectangle>();
+    
+    // loop childeren and find childeren in range
+    for(int i = 0; i < childeren.size(); i++){
+      Rectangle temp = childeren.get(i);
+      
+      searchCount++;
+      
+      // if in range add to list
+      if(range.contains(temp)){
+        list.add(temp);
+      }
+    }
+    
+    // check if not divided then return the list
+    if(!divided){
+      return list;
+    }
+    
+    list.addAll(northWest.query(range));
+    list.addAll(northEast.query(range));
+    list.addAll(southWest.query(range));
+    list.addAll(southEast.query(range));
+    
+    return list;
+  }
+  
   public Boolean insert(Rectangle child){
     // child is not inside this QT
     if(!boundary.contains(child.center)){
@@ -48,7 +83,7 @@ class QuadTree{
     }
     
     // check if there is room inside this
-    if(!divided && childeren.size() < QT_NODE_CAPACITY){
+    if(!divided && childeren.size() <= QT_NODE_CAPACITY){
       childeren.add(child);
       return true;
     }
@@ -77,8 +112,8 @@ class QuadTree{
     // get vars to calculate new Rectangle's for QT's
     float x = boundary.center.x;
     float y = boundary.center.y;
-    float hX = x/2;
-    float hY = y/2;
+    float hX = boundary.size/4;
+    float hY = boundary.size/4;
     
     // create new QT's
     northWest = new QuadTree(new Rectangle(new PVector(x-hX, y-hY), boundary.size/2));
