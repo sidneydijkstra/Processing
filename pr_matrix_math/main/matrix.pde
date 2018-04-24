@@ -7,6 +7,11 @@ public class Matrix{
   
   /* constuctor that takes the rows and cols */
   public Matrix(int rows, int cols){
+    if(rows <= 0 || cols <= 0){ // <-- error handeling
+      print("You are trying to create a new matrix with rows or cols lower than 0, you cant do this.");
+      return;
+    }
+    
     this.rows = rows;
     this.cols = cols;
     
