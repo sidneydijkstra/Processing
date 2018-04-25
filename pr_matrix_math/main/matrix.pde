@@ -117,6 +117,38 @@ public static class Matrix{
     return result;
   }
   
+  /* create a int array from a Matrix */
+  public static int[] toIntArray(Matrix value){
+    if(value.cols > 1){
+      print("You are trying to create a array from a matrix that has more colums than one!");
+      return new int[0];
+    }
+    
+    int[] result = new int[value.rows];
+    
+    for(int i = 0; i < value.rows; i++){
+      result[i] = round(value.data[i][0]);
+    }
+    
+    return result;
+  }
+  
+   /* create a float array from a Matrix */
+  public static float[] toFloatArray(Matrix value){
+    if(value.cols > 1){
+      print("You are trying to create a array from a matrix that has more colums than one!");
+      return new float[0];
+    }
+    
+    float[] result = new float[value.rows];
+    
+    for(int i = 0; i < value.rows; i++){
+      result[i] = value.data[i][0];
+    }
+    
+    return result;
+  }
+  
   /* transpose the data */
   public void transpose(){
     
