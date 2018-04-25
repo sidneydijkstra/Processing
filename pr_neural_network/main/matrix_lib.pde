@@ -1,6 +1,4 @@
-import java.util.Random;
-
-public static class Matrix{
+public class Matrix{
   
   int rows;
   int cols;
@@ -84,39 +82,6 @@ public static class Matrix{
     }
   }
   
-  /* create a matrix from a array with a int array */
-  public static Matrix fromArray(int[] array){
-    Matrix result = new Matrix(array.length, 1);
-    
-    for(int i = 0; i < array.length; i++){
-      result.data[i][0] = array[i];
-    }
-    
-    return result;
-  }
-  
-  /* create a matrix from a array with a float array */
-  public static Matrix fromArray(float[] array){
-    Matrix result = new Matrix(array.length, 1);
-    
-    for(int i = 0; i < array.length; i++){
-      result.data[i][0] = array[i];
-    }
-    
-    return result;
-  }
-  
-  /* create a matrix from a array with a Boolean array */
-  public static Matrix fromArray(Boolean[] array){
-    Matrix result = new Matrix(array.length, 1);
-    
-    for(int i = 0; i < array.length; i++){
-      result.data[i][0] = array[i] ? 1 : 0;
-    }
-    
-    return result;
-  }
-  
   /* transpose the data */
   public void transpose(){
     
@@ -128,28 +93,16 @@ public static class Matrix{
       }
     }
     
-    this.copy(result);
+    data = result.data;
+    rows = result.rows;
+    cols = result.cols;
   }
   
-  /* transpose the data ( this is the static funcion ) */
-  public static Matrix transpose(Matrix value){
-    
-    Matrix result = new Matrix(value.cols, value.rows);
-    
-    for(int i = 0; i < value.rows; i++){
-      for(int j = 0; j < value.cols; j++){
-        result.data[j][i] = value.data[i][j];
-      }
-    }
-    
-    return result;
-  }
-  
-   /* get the dot product of the data */
-  public void dotProduct(Matrix value){
+  /* get the dot product of the data */
+  public Matrix dotProduct(Matrix value){
     if(this.cols != value.rows || this.rows != value.cols){
       print("You are trying to mult two data's but they dont have the right size!");
-      return;
+      return null;
     }
     
     Matrix result = new Matrix(this.rows, value.cols);
@@ -169,40 +122,14 @@ public static class Matrix{
       }
     }
     
-    this.copy(result);
-  }
-  
-  /* get the dot product of the data ( this is the static funcion ) */
-  public static Matrix dotProduct(Matrix a, Matrix b){
-    if(a.cols != b.rows || a.rows != b.cols){
-      print("You are trying to mult two data's but they dont have the right size!");
-      return null;
-    }
-    
-    Matrix result = new Matrix(a.rows, b.cols);
-    
-    for(int i = 0; i < result.rows; i++){
-      for(int j = 0; j < result.cols; j++){
-        float sum = 0;
-        
-        for(int k = 0; k < a.cols; k++){
-          sum += a.data[i][k] * b.data[k][j];
-        }
-        
-        result.data[i][j] = sum;
-      }
-    }
-    
     return result;
   }
   
   /* randomize the values in the data with a rounded min max */
-  public void randomize(){
-    Random random = new Random();
+  public void randomize(float min, float max){
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < cols; j++){
-        float value = (random.nextFloat() * 2) - 1;
-        data[i][j] = value;
+        data[i][j] = random(min, max);
       }
     }
   }

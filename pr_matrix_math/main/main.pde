@@ -2,6 +2,8 @@
 Matrix a;
 Matrix b;
 
+Matrix c;
+
 void setup(){
   noLoop();
   
@@ -9,10 +11,14 @@ void setup(){
   a = new Matrix(2,3);
   b = new Matrix(3,2);
   
-  a.randomize(0,4);
-  a.cout();
-  a.transpose();
-  a.cout();
+  a.randomize();
+  b.randomize();
+  
+  //a.dotProduct(b);
+  //a.cout();
+  
+  c = Matrix.dotProduct(a,b);
+  c.cout();
   
   /*
   a.randomize(0,4);
