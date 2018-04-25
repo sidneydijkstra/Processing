@@ -179,7 +179,7 @@ public static class Matrix{
   
    /* get the dot product of the data */
   public void dotProduct(Matrix value){
-    if(this.cols != value.rows || this.rows != value.cols){
+    if(this.cols != value.rows){
       print("You are trying to mult two data's but they dont have the right size!");
       return;
     }
@@ -206,7 +206,7 @@ public static class Matrix{
   
   /* get the dot product of the data ( this is the static funcion ) */
   public static Matrix dotProduct(Matrix a, Matrix b){
-    if(a.cols != b.rows || a.rows != b.cols){
+    if(a.cols != b.rows){
       print("You are trying to mult two data's but they dont have the right size!");
       return null;
     }
