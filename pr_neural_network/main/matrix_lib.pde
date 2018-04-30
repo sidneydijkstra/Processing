@@ -31,57 +31,13 @@ public static class Matrix{
     this.copy(m);
   }
   
+  // ##################################### handy matrix functions ##################################### \\
+  
   /* copy a data to this data */
   public void copy(Matrix value){
     data = value.data;
     rows = value.rows;
     cols = value.cols;
-  }
-  
-  /* add a data to this data */
-  public void add(Matrix value){
-    if(this.rows != value.rows || this.cols != value.cols){
-      print("You are trying to mult two data's but they are not the same size!");
-      return;
-    }
-    
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        data[i][j] += value.data[i][j];
-      }
-    }
-  }
-  
-  /* add a value to all the index's of the data */
-  public void add(float value){
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        data[i][j] += value;
-      }
-    }
-  }
-  
-  /* mult a data to this data */
-  public void mult(Matrix value){
-    if(this.rows != value.rows || this.cols != value.cols){
-      print("You are trying to mult two data's but they are not the same size!");
-      return;
-    }
-    
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        data[i][j] *= value.data[i][j];
-      }
-    }
-  }
-  
-  /* mult a value to all the index's of the data */
-  public void mult(float value){
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        data[i][j] *= value;
-      }
-    }
   }
   
   /* create a matrix from a array with a int array */
@@ -117,35 +73,110 @@ public static class Matrix{
     return result;
   }
   
-  /* transpose the data */
-  public void transpose(){
-    
-    Matrix result = new Matrix(cols, rows);
-    
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < cols; j++){
-        result.data[j][i] = data[i][j];
-      }
+  /* create a int array from a Matrix */
+  public static int[] toIntArray(Matrix value){
+    if(value.cols > 1){
+      print("You are trying to create a array from a matrix that has more colums than one!");
+      return new int[0];
     }
     
-    this.copy(result);
-  }
-  
-  /* transpose the data ( this is the static funcion ) */
-  public static Matrix transpose(Matrix value){
-    
-    Matrix result = new Matrix(value.cols, value.rows);
+    int[] result = new int[value.rows];
     
     for(int i = 0; i < value.rows; i++){
-      for(int j = 0; j < value.cols; j++){
-        result.data[j][i] = value.data[i][j];
-      }
+      result[i] = round(value.data[i][0]);
     }
     
     return result;
   }
   
-   /* get the dot product of the data */
+   /* create a float array from a Matrix */
+  public static float[] toFloatArray(Matrix value){
+    if(value.cols > 1){
+      print("You are trying to create a array from a matrix that has more colums than one!");
+      return new float[0];
+    }
+    
+    float[] result = new float[value.rows];
+    
+    for(int i = 0; i < value.rows; i++){
+      result[i] = value.data[i][0];
+    }
+    
+    return result;
+  }
+  
+  // ##################################### normal matrix math functions ##################################### \\
+  
+  /* add a data to this data */
+  public void add(Matrix value){
+    if(this.rows != value.rows || this.cols != value.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return;
+    }
+    
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        data[i][j] += value.data[i][j];
+      }
+    }
+  }
+  
+  /* add a value to all the index's of the data */
+  public void add(float value){
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        data[i][j] += value;
+      }
+    }
+  }
+  
+  /* sub a matrix to this matrix */
+  public void sub(Matrix value){
+    if(this.rows != value.rows || this.cols != value.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return;
+    }
+    
+    for(int i = 0; i < this.rows; i++){
+      for(int j = 0; j < this.cols; j++){
+        data[i][j] -= value.data[i][j];
+      }
+    }
+  }
+  
+  /* sub a value to this matrix */
+  public void sub(float value){
+    for(int i = 0; i < this.rows; i++){
+      for(int j = 0; j < this.cols; j++){
+        data[i][j] -= value;
+      }
+    }
+  }
+  
+  /* mult a data to this data */
+  public void mult(Matrix value){
+    if(this.rows != value.rows || this.cols != value.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return;
+    }
+    
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        data[i][j] *= value.data[i][j];
+      }
+    }
+  }
+  
+  /* mult a value to all the index's of the data */
+  public void mult(float value){
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        data[i][j] *= value;
+      }
+    }
+  }
+  
+  /* get the dot product of the data */
   public void dotProduct(Matrix value){
     if(this.cols != value.rows || this.rows != value.cols){
       print("You are trying to mult two data's but they dont have the right size!");
@@ -172,10 +203,95 @@ public static class Matrix{
     this.copy(result);
   }
   
+  /* transpose the data */
+  public void transpose(){
+    
+    Matrix result = new Matrix(cols, rows);
+    
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        result.data[j][i] = data[i][j];
+      }
+    }
+    
+    this.copy(result);
+  }
+  
+  // ##################################### static matrix math functions ##################################### \\
+  
+  
+  /* add a data to this data */
+  public static Matrix add(Matrix a, Matrix b){
+    if(a.rows != b.rows || a.cols != b.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return null;
+    }
+    
+    Matrix result = new Matrix(a.rows, a.cols);
+    
+    for(int i = 0; i < result.rows; i++){
+      for(int j = 0; j < result.cols; j++){
+        result.data[i][j] = a.data[i][j] + b.data[i][j];
+      }
+    }
+    
+    return result;
+  }
+  
+  /* add a data to this data */
+  public static Matrix sub(Matrix a, Matrix b){
+    if(a.rows != b.rows || a.cols != b.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return null;
+    }
+    
+    Matrix result = new Matrix(a.rows, a.cols);
+    
+    for(int i = 0; i < result.rows; i++){
+      for(int j = 0; j < result.cols; j++){
+        result.data[i][j] = a.data[i][j] - b.data[i][j];
+      }
+    }
+    
+    return result;
+  }
+  
+  /* mult a data to this data */
+  public static Matrix mult(Matrix a, Matrix b){
+    if(a.rows != b.rows || a.cols != b.cols){
+      print("You are trying to mult two data's but they are not the same size!");
+      return null;
+    }
+    
+    Matrix result = new Matrix(a.rows, a.cols);
+    
+    for(int i = 0; i < result.rows; i++){
+      for(int j = 0; j < result.cols; j++){
+        result.data[i][j] = a.data[i][j] * b.data[i][j];
+      }
+    }
+    
+    return result;
+  }
+  
+  /* transpose the data ( this is the static funcion ) */
+  public static Matrix transpose(Matrix value){
+    
+    Matrix result = new Matrix(value.cols, value.rows);
+    
+    for(int i = 0; i < value.rows; i++){
+      for(int j = 0; j < value.cols; j++){
+        result.data[j][i] = value.data[i][j];
+      }
+    }
+    
+    return result;
+  }
+  
   /* get the dot product of the data ( this is the static funcion ) */
   public static Matrix dotProduct(Matrix a, Matrix b){
-    if(a.cols != b.rows || a.rows != b.cols){
-      print("You are trying to mult two data's but they dont have the right size!");
+    if(a.cols != b.rows){
+      print("You are trying to mult two matrix's but they dont have the right size!");
       return null;
     }
     
@@ -196,6 +312,8 @@ public static class Matrix{
     return result;
   }
   
+  // ##################################### extra matrix functions ##################################### \\
+  
   /* randomize the values in the data with a rounded min max */
   public void randomize(){
     Random random = new Random();
@@ -211,7 +329,6 @@ public static class Matrix{
   public void cout(){
     for(int i = 0; i < rows; i++){
       print("[ ");
-      
       for(int j = 0; j < cols; j++){
         print(data[i][j]);
         
@@ -219,7 +336,6 @@ public static class Matrix{
           print(" , ");
         }
       }
-      
       print(" ]\n\n");
     }
   }
