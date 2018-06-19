@@ -63,38 +63,6 @@ class Map{
     }
   }
   
-  public void spawnFood(float change, int max){
-    int foodAmount = 0;
-    for(int i = 0; i < _tiles.length; i++){
-      Tile t = _tiles[i];
-      if(t.containsFood){
-        foodAmount++;
-      }
-    }
-    
-    if(foodAmount >= max){
-      return;
-    }
-    
-    for(int i = 0; i < _tiles.length; i++){
-      Tile t = _tiles[i];
-      if(!t.containsHome && !t.containsFood && t.isWalkable && random(100) <= change){
-        t.containsFood = true;
-      }
-    }
-  }
-  
-  public Tile searchFood(Tile current, float range){
-    ArrayList<Tile> list = this.getAllWalkableTiles();
-    for(int i = 0; i < list.size(); i++){
-     Tile t = (Tile)list.get(i);
-     if(t.containsFood && dist(current.position.x, current.position.y, t.position.x, t.position.y) <= range){
-       return t;
-     }
-    }
-    return null;
-  }
-  
   public int getMapSizeX(){
     return _mapWidth;
   }

@@ -15,7 +15,7 @@ void setup(){
   
   entitys = new Entity[entityAmount];
   for(int i = 0; i < entityAmount; i++){
-    entitys[i] = new Entity(i);
+    entitys[i] = new Entity();
     AiManager.addAiListener(entitys[i]);
   }
 }
@@ -28,15 +28,4 @@ void draw(){
   
   AiManager.update(map);
   AiManager.show();
-  
-  if(trainCurrentAmount >= trainAmount){
-    ArrayList<Entity> list = AiManager.aiListeners;
-    for(int i = 0; i < list.size(); i ++){
-      Entity e = (Entity)list.get(i);
-      print("Entity: " + e._id + " - Food: " + e.foodAmount + "\n");
-    }
-    noLoop();
-  }
-  trainCurrentAmount++;
-  map.spawnFood(0.1f, 20);
 }
