@@ -204,7 +204,7 @@ public static class Matrix{
   }
   
   /* transpose the data */
-  public Matrix transpose(){
+  public void transpose(){
     
     Matrix result = new Matrix(cols, rows);
     
@@ -214,8 +214,8 @@ public static class Matrix{
       }
     }
     
-    //this.copy(result);
-    return result;
+    this.copy(result);
+    //return result;
   }
   
   // ##################################### static matrix math functions ##################################### \\
@@ -320,6 +320,7 @@ public static class Matrix{
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < cols; j++){
         float value = (random.nextFloat() * 2) - 1;
+        //float value = floor((random.nextFloat() * 10));
         data[i][j] = value;
       }
     }
