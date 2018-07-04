@@ -179,7 +179,7 @@ public static class Matrix{
   /* get the dot product of the data */
   public void dot(Matrix value){
     if(this.cols != value.rows || this.rows != value.cols){
-      print("You are trying to dotProduct two matrix's but they dont have the right size!");
+      print("You are trying to dotProduct two matrix's but they dont have the right size!" + this.rows + "|" + value.rows + "|" + this.cols + "|" + value.cols + "\n");
       return;
     }
     

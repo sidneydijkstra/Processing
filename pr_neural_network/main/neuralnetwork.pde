@@ -59,6 +59,63 @@ public class NeuralNetwork{
   }
   
   public void train(float[] inputArray, float[] targetArray){
+    // THIRD TRY \\
+    
+    // get input in matrix
+    Matrix inputs = Matrix.fromArray(inputArray);
+    
+    // generating the hidden outputs
+    Matrix hidden = Matrix.dot(weightsIH, inputs);
+    hidden.add(this.biasHidden);
+    hidden = this.sigmoid(hidden);
+    
+    // generating the hidden outputs
+    Matrix outputs = Matrix.dot(weightsHO, hidden);
+    outputs.add(this.biasOutput);
+    outputs = this.sigmoid(outputs);
+    
+    // get target in array
+    Matrix targets = Matrix.fromArray(targetArray);
+    
+    // calculate output error
+    Matrix output_errors = Matrix.sub(targets, outputs);
+    
+    
+    // Calculate gradient
+    Matrix outputGradients = this.dsigmoid(outputs);
+    outputGradients.dot(output_errors);
+    outputGradients.mult(this.learningRate);
+    
+    // Calculate deltas
+    Matrix hidden_T = Matrix.transpose(hidden);
+    Matrix weight_ho_deltas = Matrix.dot(outputGradients, hidden_T);
+    
+    // adjust weights
+    this.weightsHO.add(weight_ho_deltas);
+    this.biasOutput.add(outputGradients);
+    
+    
+    // Calculate the hidden layer errors
+    Matrix who_t = Matrix.transpose(this.weightsHO);
+    Matrix hidden_errors = Matrix.dot(who_t, output_errors);
+    
+    //  Calculate gradient
+    Matrix hiddenGradients = this.dsigmoid(hidden);
+    hiddenGradients.dot(hidden_errors); // <-- hidden_errors is not right size for 'dot()' function
+    hiddenGradients.mult(this.learningRate);
+
+    // Calcuate input->hidden deltas
+    Matrix inputs_T = Matrix.transpose(inputs);
+    Matrix weight_ih_deltas = Matrix.dot(hiddenGradients, inputs_T);
+    
+    // adjust weights
+    this.weightsIH.add(weight_ih_deltas); //<>//
+    this.biasHidden.add(hiddenGradients);
+    
+    
+    
+    // FIRST TRY \\
+    
     // normal feedforward calculations
     // create the input matrix
     /*
@@ -112,6 +169,10 @@ public class NeuralNetwork{
     // adjust the bias by its deltas
     */
     
+    
+    // SECOND TRY \\
+    
+    /*
     Matrix inputs = Matrix.fromArray(inputArray); //<>//
     Matrix targets = Matrix.fromArray(targetArray);
     
@@ -125,7 +186,7 @@ public class NeuralNetwork{
     Matrix output_errors = Matrix.sub(targets, outputs);
     
     
-    Matrix weightsTransposeHO = weightsHO.transpose();
+    Matrix weightsTransposeHO = Matrix.transpose(weightsHO);
     Matrix hidden_errors = Matrix.dot(weightsTransposeHO, outputs);
     
     // calculate output gradiant
@@ -133,24 +194,25 @@ public class NeuralNetwork{
     outputGradients.mult(output_errors);
     outputGradients.mult(this.learningRate);
     
+    this.biasOutput.add(outputGradients);
+    
     // calculate hidden gradiant
     Matrix hiddenGradients = this.dsigmoid(hiddenOutputs);
     hiddenGradients.mult(hidden_errors);
     hiddenGradients.mult(this.learningRate);
     
+    this.biasHidden.add(hiddenGradients);
+    
     // Change in weights from HIDDEN --> OUTPUT
-    Matrix hiddenOutputsTranspose = hiddenOutputs.transpose();
+    Matrix hiddenOutputsTranspose = Matrix.transpose(hiddenOutputs);
     Matrix deltaWOuput = Matrix.dot(outputGradients, hiddenOutputsTranspose);    
     this.weightsHO.add(deltaWOuput);
     
     // Change in weights from INPUT --> HIDDEN
-    Matrix inputsTranspose = inputs.transpose();
+    Matrix inputsTranspose = Matrix.transpose(inputs);
     Matrix deltaWHidden = Matrix.dot(hiddenGradients, inputsTranspose);
     this.weightsIH.add(deltaWHidden);
-    
-    // idk??
-    this.biasOutput.add(outputGradients);
-    this.biasHidden.add(hiddenGradients);
+    */
   }
   
   /* sigmoid function for values between -1 and 1 */

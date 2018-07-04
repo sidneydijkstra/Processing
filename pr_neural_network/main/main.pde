@@ -29,7 +29,7 @@ void setup(){
   trainingData[3] = new TData(1, 1, 0);
   
   // train the network
-  for(int i = 0; i < 10000; i++){
+  for(int i = 0; i < 1000000; i++){
     int index = floor(random(trainingData.length));
     brain.train(trainingData[index].input, trainingData[index].target);
   }
