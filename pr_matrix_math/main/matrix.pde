@@ -110,7 +110,7 @@ public static class Matrix{
   /* add a data to this data */
   public void add(Matrix value){
     if(this.rows != value.rows || this.cols != value.cols){
-      print("You are trying to mult two data's but they are not the same size!");
+      print("You are trying to add two matrix's but they are not the same size!");
       return;
     }
     
@@ -133,7 +133,7 @@ public static class Matrix{
   /* sub a matrix to this matrix */
   public void sub(Matrix value){
     if(this.rows != value.rows || this.cols != value.cols){
-      print("You are trying to mult two data's but they are not the same size!");
+      print("You are trying to sub two matrix's but they are not the same size!");
       return;
     }
     
@@ -177,9 +177,9 @@ public static class Matrix{
   }
   
   /* get the dot product of the data */
-  public void dotProduct(Matrix value){
+  public void dot(Matrix value){
     if(this.cols != value.rows || this.rows != value.cols){
-      print("You are trying to mult two data's but they dont have the right size!");
+      print("You are trying to dotProduct two matrix's but they dont have the right size!");
       return;
     }
     
@@ -215,6 +215,7 @@ public static class Matrix{
     }
     
     this.copy(result);
+    //return result;
   }
   
   // ##################################### static matrix math functions ##################################### \\
@@ -223,7 +224,7 @@ public static class Matrix{
   /* add a data to this data */
   public static Matrix add(Matrix a, Matrix b){
     if(a.rows != b.rows || a.cols != b.cols){
-      print("You are trying to mult two data's but they are not the same size!");
+      print("You are trying to add two matrix's but they are not the same size!");
       return null;
     }
     
@@ -241,7 +242,7 @@ public static class Matrix{
   /* add a data to this data */
   public static Matrix sub(Matrix a, Matrix b){
     if(a.rows != b.rows || a.cols != b.cols){
-      print("You are trying to mult two data's but they are not the same size!");
+      print("You are trying to sub two matrix's but they are not the same size!");
       return null;
     }
     
@@ -259,7 +260,7 @@ public static class Matrix{
   /* mult a data to this data */
   public static Matrix mult(Matrix a, Matrix b){
     if(a.rows != b.rows || a.cols != b.cols){
-      print("You are trying to mult two data's but they are not the same size!");
+      print("You are trying to mult two matrix's but they are not the same size!");
       return null;
     }
     
@@ -276,7 +277,6 @@ public static class Matrix{
   
   /* transpose the data ( this is the static funcion ) */
   public static Matrix transpose(Matrix value){
-    
     Matrix result = new Matrix(value.cols, value.rows);
     
     for(int i = 0; i < value.rows; i++){
@@ -289,7 +289,7 @@ public static class Matrix{
   }
   
   /* get the dot product of the data ( this is the static funcion ) */
-  public static Matrix dotProduct(Matrix a, Matrix b){
+  public static Matrix dot(Matrix a, Matrix b){
     if(a.cols != b.rows){
       print("You are trying to mult two matrix's but they dont have the right size!");
       return null;
@@ -319,7 +319,8 @@ public static class Matrix{
     Random random = new Random();
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < cols; j++){
-        float value = (random.nextFloat() * 2) - 1;
+        //float value = (random.nextFloat() * 2) - 1;
+        float value = floor((random.nextFloat() * 10));
         data[i][j] = value;
       }
     }
