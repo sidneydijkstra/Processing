@@ -29,6 +29,7 @@ class Circle{
     position.x = p.x + rDiv * cos(a);
     position.y = p.y + rDiv * sin(a);
   }
+  
   public void rotateRound(Circle c, float a, float s){
     a *= s;
     float rDiv = c.radius/2 + radius/2;

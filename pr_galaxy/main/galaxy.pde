@@ -12,7 +12,7 @@ class Galaxy{
       for(int y = 0; y < height; y++){
         if(dist(x, y, point.x, point.y) < maxDis && !randomBool(maxDis, dist(x, y, point.x, point.y))){
           color col = colors[(int)random(colors.length)];
-          sols.add(new SolarSystem(x, y, col));
+          sols.add(new SolarSystem(x, y, col, 5));
         }
       }
     }

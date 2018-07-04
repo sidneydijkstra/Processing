@@ -3,27 +3,34 @@ class SolarSystem{
   color solColor;
   
   Planet sun;
-  Planet p;
+  Planet[] planets;
   
-  SolarSystem(int x, int y, color c){
+  SolarSystem(int x, int y, color _color, int amount){
     // set galaxy options
     solPosition = new PVector(x,y);
-    solColor = c;
+    solColor = _color;
+    
+    planets = new Planet[amount];
     
     // set planet
-    sun = new Planet(null,null);
-    sun.mass = 100;
-    p = new Planet(sun, new PVector((width/2) - 80, height/2));
+    sun = new Planet(null, 50, 0, 0);
+    for(int i = 0; i < planets.length; i++){
+      planets[i] = new Planet(sun, random(10, 40), random(30, 120), random(0.01, 0.1));
+    }
   }
   
   void update(){
     sun.update();
-    p.update();
+    for(int i = 0; i < planets.length; i++){
+      planets[i].update();
+    }
   }
   
   void show(){
     sun.show();
-    p.show();
+    for(int i = 0; i < planets.length; i++){
+      planets[i].show();
+    }
   }
   
   // get solarsystem x
