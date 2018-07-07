@@ -291,7 +291,7 @@ public static class Matrix{
   /* get the dot product of the data ( this is the static funcion ) */
   public static Matrix dot(Matrix a, Matrix b){
     if(a.cols != b.rows){
-      print("You are trying to mult two matrix's but they dont have the right size!");
+      print("You are trying to dotProduct two matrix's but they dont have the right size!");
       return null;
     }
     

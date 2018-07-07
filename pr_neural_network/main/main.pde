@@ -22,14 +22,15 @@ void setup(){
   brain = new NeuralNetwork(2, 2, 1);
   
   // create the training data
-  trainingData = new TData[4];
-  trainingData[0] = new TData(1, 0, 1);
+  trainingData = new TData[5];
+  trainingData[0] = new TData(1, 1, 1);
   trainingData[1] = new TData(0, 1, 1);
   trainingData[2] = new TData(0, 0, 0);
-  trainingData[3] = new TData(1, 1, 0);
+  trainingData[3] = new TData(1, 0, 0);
+  trainingData[4] = new TData(0.5, 0.5, 0.5);
   
   // train the network
-  for(int i = 0; i < 1000000; i++){
+  for(int i = 0; i < 100000; i++){
     int index = floor(random(trainingData.length));
     brain.train(trainingData[index].input, trainingData[index].target);
   }
