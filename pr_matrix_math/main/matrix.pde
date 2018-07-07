@@ -179,7 +179,7 @@ public static class Matrix{
   /* get the dot product of the data */
   public void dot(Matrix value){
     if(this.cols != value.rows || this.rows != value.cols){
-      print("You are trying to dotProduct two matrix's but they dont have the right size!");
+      print("You are trying to dotProduct two matrix's but they dont have the right size!" + this.rows + "|" + value.rows + "|" + this.cols + "|" + value.cols + "\n");
       return;
     }
     
@@ -291,7 +291,7 @@ public static class Matrix{
   /* get the dot product of the data ( this is the static funcion ) */
   public static Matrix dot(Matrix a, Matrix b){
     if(a.cols != b.rows){
-      print("You are trying to mult two matrix's but they dont have the right size!");
+      print("You are trying to dotProduct two matrix's but they dont have the right size!");
       return null;
     }
     
@@ -319,8 +319,8 @@ public static class Matrix{
     Random random = new Random();
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < cols; j++){
-        //float value = (random.nextFloat() * 2) - 1;
-        float value = floor((random.nextFloat() * 10));
+        float value = (random.nextFloat() * 2) - 1;
+        //float value = floor((random.nextFloat() * 10));
         data[i][j] = value;
       }
     }
