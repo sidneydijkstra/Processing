@@ -37,7 +37,11 @@ public class NeuralNetwork{
     this.learningRate = 0.1f;
   }
   
-  public float[] feedForward(float[] input){
+  public float[] predict(NeuralNetworkData data){
+    return this.predict(data.input);
+  }
+  
+  public float[] predict(float[] input){
     // create the input matrix
     Matrix inputs = Matrix.fromArray(input);
     
@@ -55,6 +59,10 @@ public class NeuralNetwork{
     
     // return the output
     return Matrix.toFloatArray(output);
+  }
+  
+  public void train(NeuralNetworkData data){
+    this.train(data.input, data.output);
   }
   
   public void train(float[] inputArray, float[] targetArray){
