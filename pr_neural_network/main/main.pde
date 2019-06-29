@@ -17,6 +17,10 @@ void setup(){
   epoch.addTrainingData(new NeuralNetworkData(new float[]{1, 0}, new float[]{1}));
   epoch.addTrainingData(new NeuralNetworkData(new float[]{0, 1}, new float[]{1}));
   
+  
+  for(int i = 0; i < 10000; i++){
+    this.train(epoch);
+  }
 }
 
 void draw(){
@@ -35,11 +39,6 @@ void draw(){
       text(guess, x * (width/size), y * (height/size) + ((height/size)/2));
     }
   }
-  
-  for(int i = 0; i < 50; i++){
-    this.train(epoch);
-  }
-  
 }
 
 public void train(Epoch epoch){

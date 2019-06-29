@@ -1,22 +1,19 @@
 
 
-NeuralNetwork brain;
+NeuralNetworkLayerd brain;
 Epoch epoch;
 
 
 void setup(){
   size(800, 800);
+  int[] hiddenLayers = {8,8};
+  brain = new NeuralNetworkLayerd(2, hiddenLayers, 1);
   
-  // create the neural network
-  brain = new NeuralNetwork(2, 8, 1);
-  
-  // create the training data
   epoch = new Epoch();
   epoch.addTrainingData(new NeuralNetworkData(new float[]{1, 1}, new float[]{0}));
   epoch.addTrainingData(new NeuralNetworkData(new float[]{0, 0}, new float[]{0}));
   epoch.addTrainingData(new NeuralNetworkData(new float[]{1, 0}, new float[]{1}));
   epoch.addTrainingData(new NeuralNetworkData(new float[]{0, 1}, new float[]{1}));
-  
 }
 
 void draw(){
@@ -36,15 +33,14 @@ void draw(){
     }
   }
   
-  for(int i = 0; i < 50; i++){
-    this.train(epoch);
+  for(int i = 0; i < 100; i++){
+    train(epoch);
   }
-  
 }
 
 public void train(Epoch epoch){
   NeuralNetworkData[] data = epoch.getData(true);
   for(int i = 0; i < data.length; i++){
-    brain.train(data[i]);
+    brain.train(data[i].input, data[i].output);
   }
 }
