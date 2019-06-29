@@ -91,7 +91,7 @@ public class NeuralNetwork{
     output_gradients.mult(this.learningRate);
     
     // calculate hidden->output deltas
-    Matrix hidden_transpose = Matrix.transpose(hidden);
+    Matrix hidden_transpose = Matrix.transpose(hidden); //<>//
     Matrix weightHO_deltas = Matrix.dot(output_gradients, hidden_transpose);
     
     // adjust weights
@@ -112,8 +112,8 @@ public class NeuralNetwork{
     Matrix weightIH_deltas = Matrix.dot(hiddenGradients, inputs_transpose);
     
     // adjust weights
-    this.weightsIH.add(weightIH_deltas);
-    this.biasHidden.add(hiddenGradients);
+    this.weightsIH.add(weightIH_deltas); //<>//
+    this.biasHidden.add(hiddenGradients); //<>//
   }
   
   /* sigmoid function for values between -1 and 1 */
@@ -136,31 +136,38 @@ public class NeuralNetwork{
     return result;
   }
   
-}
-
-public class NeuralNetworkData{
-  
-  float[] input;
-  float[] output;
-  
-  public NeuralNetworkData(){
-    this.input = new float[0];
-    this.output = new float[0];
+  public void loadNetwork(String _fileLocation){
+    String[] formatData = loadStrings(_fileLocation);
+    
+    // header
+    inputNodesSize = int(formatData[0]);
+    hiddenNodesSize = int(formatData[1]);
+    outputNodesSize = int(formatData[2]);
+    learningRate = float(formatData[3]);
+    
+    // data
+    weightsIH = Matrix.fromstring(formatData[4]);
+    weightsHO = Matrix.fromstring(formatData[5]);
+    biasHidden = Matrix.fromstring(formatData[6]);
+    biasOutput = Matrix.fromstring(formatData[7]);
   }
   
-  public NeuralNetworkData(float[] input){
-    this.input = input;
-    this.output = new float[0];
-  }
-  
-  public NeuralNetworkData(float[] input, float[] output){
-    this.input = input;
-    this.output = output;
-  }
-  
-  public void createData(float[] input, float[] output){
-    this.input = input;
-    this.output = output;
+  public void saveNetwork(String _fileName){
+    String[] formatData = new String[8];
+    
+    // header
+    formatData[0] = str(inputNodesSize);
+    formatData[1] = str(hiddenNodesSize);
+    formatData[2] = str(outputNodesSize);
+    formatData[3] = str(learningRate);
+    
+    // data
+    formatData[4] = weightsIH.tostring();
+    formatData[5] = weightsHO.tostring();
+    formatData[6] = biasHidden.tostring();
+    formatData[7] = biasOutput.tostring();
+    
+    saveStrings(_fileName, formatData);
   }
   
 }

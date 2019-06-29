@@ -30,10 +30,10 @@ void draw(){
 }
 
 void keyPressed(){
-    if(key == 'x'){
+    if(key == 'x' || key == 'X'){
       galaxy.loadSol = true;
     }else
-    if(key == 'c'){
+    if(key == 'c' || key == 'C'){
       galaxy.loadSol = false;
       galaxy.loadedSol = null;
     }

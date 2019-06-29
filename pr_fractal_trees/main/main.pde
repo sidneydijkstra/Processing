@@ -13,7 +13,7 @@ void draw(){
   
   for(int i = 0; i < branches.size(); i++){
     branches.get(i).show();
-    branches.get(i).jitter();
+    //branches.get(i).jitter();
   }
 }
 

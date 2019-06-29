@@ -341,6 +341,37 @@ public static class Matrix{
     }
   }
   
+  public String tostring(){
+    String formatData = str(rows) + "," + str(cols);
+    
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < cols; j++){
+        formatData += "," + str(data[i][j]);
+      }
+    }
+    
+    return formatData;
+  }
+  
+  public static Matrix fromstring(String _format){
+    String[] formatData = split(_format, ",");
+    
+    int r = int(formatData[0]);
+    int c = int(formatData[1]);
+    
+    Matrix tempMatrix = new Matrix(r,c);
+    
+    int step = 2;
+    for(int i = 0; i < r; i++){
+      for(int j = 0; j < c; j++){
+        tempMatrix.data[i][j] = float(formatData[step]);
+        step++;
+      }
+    }
+    
+    return tempMatrix;
+  }
+  
 }
 
 /* here i explane some functions that are hard to understand from the code

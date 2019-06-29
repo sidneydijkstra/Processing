@@ -1,5 +1,5 @@
 
-int gridSize = 900;
+int gridSize = 500;
 Cell[] grid;
 
 Cell current;

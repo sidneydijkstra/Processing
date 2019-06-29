@@ -15,7 +15,12 @@ class SolarSystem{
     // set planet
     sun = new Planet(null, 50, 0, 0);
     for(int i = 0; i < planets.length; i++){
-      planets[i] = new Planet(sun, random(10, 40), random(30, 120), random(0.01, 0.1));
+      
+      float radius = random(10, 40);
+      float distance = map(radius, 10, 40, 30, 250);
+      float speed = map(radius, 10, 40, 0.05f, 0.01f);
+      
+      planets[i] = new Planet(sun, radius, distance, speed);
     }
   }
   

@@ -1,3 +1,22 @@
+
+/*
+  
+  save file format
+  
+  (header)
+  0 -> input nodes size
+  1 -> hidden nodes size
+  2 -> output nodes size
+  4 -> learningRate value
+  
+  (data)
+  5 -> weightsIH
+  6 -> weightsHO
+  7 -> biasHidden
+  8 -> biasOutput
+
+*/
+
 public class NeuralNetwork{
   
   int inputNodesSize;
@@ -57,8 +76,29 @@ public class NeuralNetwork{
     // activation function
     output = this.sigmoid(output);
     
+    // do softmax [temp/test]
+    float[] array = Matrix.toFloatArray(output);
+    
+    // get exp
+    float[] array_exp = new float[array.length];
+    for(int i = 0; i < array.length; i++){
+      array_exp[i] = (float)Math.exp(array[i]);
+    }
+    
+    // get sum
+    float sum_exp = 0;
+    for(int i = 0; i < array.length; i++){
+      sum_exp += array_exp[i];
+    }
+    
+    // get softmax
+    float[] array_softmax = new float[array.length];
+    for(int i = 0; i < array.length; i++){
+      array_softmax[i] = array_exp[i] / sum_exp;
+    }
+    
     // return the output
-    return Matrix.toFloatArray(output);
+    return array_softmax;
   }
   
   public void train(NeuralNetworkData data){
@@ -91,7 +131,7 @@ public class NeuralNetwork{
     output_gradients.mult(this.learningRate);
     
     // calculate hidden->output deltas
-    Matrix hidden_transpose = Matrix.transpose(hidden); //<>//
+    Matrix hidden_transpose = Matrix.transpose(hidden);
     Matrix weightHO_deltas = Matrix.dot(output_gradients, hidden_transpose);
     
     // adjust weights
@@ -112,8 +152,8 @@ public class NeuralNetwork{
     Matrix weightIH_deltas = Matrix.dot(hiddenGradients, inputs_transpose);
     
     // adjust weights
-    this.weightsIH.add(weightIH_deltas); //<>//
-    this.biasHidden.add(hiddenGradients); //<>//
+    this.weightsIH.add(weightIH_deltas);
+    this.biasHidden.add(hiddenGradients);
   }
   
   /* sigmoid function for values between -1 and 1 */
@@ -125,7 +165,7 @@ public class NeuralNetwork{
     }
     return value;
   }
-  /* dsigmoid function for values between -1 and 1 */
+  /* dsigmoid function */
   public Matrix dsigmoid(Matrix value){
     Matrix result = new Matrix(value.rows, value.cols);
     for(int i = 0; i < value.rows; i++){
@@ -168,6 +208,33 @@ public class NeuralNetwork{
     formatData[7] = biasOutput.tostring();
     
     saveStrings(_fileName, formatData);
+  }
+  
+}
+
+public class NeuralNetworkData{
+  
+  float[] input;
+  float[] output;
+  
+  public NeuralNetworkData(){
+    this.input = new float[0];
+    this.output = new float[0];
+  }
+  
+  public NeuralNetworkData(float[] input){
+    this.input = input;
+    this.output = new float[0];
+  }
+  
+  public NeuralNetworkData(float[] input, float[] output){
+    this.input = input;
+    this.output = output;
+  }
+  
+  public void createData(float[] input, float[] output){
+    this.input = input;
+    this.output = output;
   }
   
 }
